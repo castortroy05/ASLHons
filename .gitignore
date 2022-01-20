@@ -127,7 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
 # Image files
 .png
+
+# Dataset Folder
+/dataset5
+dataset5/
+
 # Models
 .h5
