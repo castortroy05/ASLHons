@@ -128,8 +128,14 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Image files
+# Image files (keep template images)
 *.png
+!data/processed/letter_templates/*.png
+
+# Video files (generated outputs)
+*.mp4
+*.avi
+*.mov
 
 # Dataset Folder
 /dataset5
@@ -139,3 +145,14 @@ dataset5/
 
 # Models
 *.h5
+
+# Project specific
+/outputs
+outputs/
+logs/
+data/processed/
+.streamlit/
+
+# Keep directory structure
+!outputs/.gitkeep
+!data/processed/.gitkeep
