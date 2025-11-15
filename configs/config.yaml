@@ -1,0 +1,217 @@
+# ASL Recognition & Translation Configuration
+
+# Project Metadata
+project_name: "ASL_Recognition_Translation"
+experiment_name: "improved_baseline"
+random_seed: 42
+
+# Data Configuration
+data:
+  # Path to ASL fingerspelling dataset
+  dataset_path: "../ASLTransalation/fingerspelling/data"
+
+  # Image preprocessing
+  image_size: 224  # For EfficientNet/MobileNet (use 64 for lightweight testing)
+  input_channels: 3
+  normalize: true
+
+  # Data split ratios
+  test_size: 0.20
+  val_size: 0.10  # 10% of training data
+
+  # Stratification and splitting
+  stratify: true
+  person_based_split: false  # Set to true if person metadata available
+
+  # Classes
+  num_classes: 24
+  excluded_letters: ['j', 'z']  # j requires motion, z not in dataset
+
+  # Data augmentation
+  augmentation:
+    enabled: true
+    rotation_range: 15
+    width_shift_range: 0.1
+    height_shift_range: 0.1
+    zoom_range: 0.15
+    brightness_range: [0.8, 1.2]
+    horizontal_flip: false  # ASL is not horizontally symmetric!
+    vertical_flip: false
+    fill_mode: "nearest"
+
+# Model Configuration
+model:
+  # Architecture choices: efficientnetv2, mobilenetv3, resnet50, vgg19
+  architecture: "efficientnetv2"
+
+  # Base model settings
+  use_pretrained: true
+  pretrained_weights: "imagenet"
+  freeze_base: true
+  freeze_until_layer: -30  # Unfreeze last 30 layers for fine-tuning (set to 0 to freeze all)
+
+  # Custom head architecture
+  dense_units: [256, 128]  # Two dense layers with these units
+  dropout_rate: 0.5
+  use_batch_norm: true
+  activation: "relu"
+
+  # MediaPipe integration
+  use_mediapipe_landmarks: true
+  landmark_model: "hand"  # Options: hand, pose, holistic
+  combine_strategy: "concat"  # Options: concat, add, separate_branch
+
+# Training Configuration
+training:
+  # Optimization
+  optimizer: "adam"  # Options: adam, rmsprop, sgd
+  learning_rate: 0.0001
+
+  # For fine-tuning phase
+  fine_tune_learning_rate: 0.00001
+  fine_tune_epochs: 10
+
+  # Training parameters
+  batch_size: 32
+  epochs: 50
+  workers: 4
+  use_multiprocessing: false
+
+  # Loss and metrics
+  loss: "categorical_crossentropy"
+  metrics: ["accuracy", "top_3_accuracy"]
+
+  # Callbacks
+  callbacks:
+    early_stopping:
+      enabled: true
+      monitor: "val_loss"
+      patience: 10
+      restore_best_weights: true
+      min_delta: 0.0001
+
+    reduce_lr:
+      enabled: true
+      monitor: "val_loss"
+      factor: 0.5
+      patience: 5
+      min_lr: 0.000001
+
+    model_checkpoint:
+      enabled: true
+      monitor: "val_accuracy"
+      save_best_only: true
+      save_weights_only: false
+      mode: "max"
+
+    tensorboard:
+      enabled: true
+      histogram_freq: 1
+      write_graph: true
+      write_images: false
+      update_freq: "epoch"
+
+  # Device
+  device: "auto"  # Options: auto, cpu, gpu
+  mixed_precision: true
+
+# Evaluation Configuration
+evaluation:
+  # Metrics to compute
+  compute_confusion_matrix: true
+  compute_per_class_metrics: true
+  compute_top_k_accuracy: [1, 3, 5]
+
+  # Visualization
+  save_predictions: true
+  num_prediction_samples: 50
+  visualize_errors: true
+
+  # Test-time augmentation
+  tta_enabled: false
+  tta_steps: 5
+
+# Inference Configuration
+inference:
+  # Real-time detection
+  confidence_threshold: 0.7
+  min_detection_confidence: 0.5
+  min_tracking_confidence: 0.5
+
+  # Smoothing (for video)
+  temporal_smoothing: true
+  smoothing_window: 5
+
+  # Camera settings
+  camera_index: 0
+  frame_width: 1280
+  frame_height: 720
+  fps: 30
+
+# Text-to-Sign Configuration
+text_to_sign:
+  # Translation approach
+  method: "fingerspelling"  # Options: fingerspelling, gloss, hybrid
+
+  # Fingerspelling database
+  letter_image_path: "data/processed/letter_templates"
+  letter_video_path: "data/processed/letter_videos"
+
+  # Timing (for video generation)
+  letter_duration_ms: 800  # Duration to display each letter
+  transition_duration_ms: 200  # Transition between letters
+
+  # ASL Grammar (future enhancement)
+  use_asl_grammar: false
+  gloss_dictionary_path: "data/asl_gloss_dict.json"
+
+# Avatar Configuration
+avatar:
+  # Avatar type: stick_figure, 3d_model, video_composite
+  type: "stick_figure"
+
+  # Stick figure settings
+  stick_figure:
+    use_mediapipe_skeleton: true
+    line_thickness: 3
+    point_radius: 5
+    color_scheme: "default"  # Options: default, colorful, monochrome
+
+  # 3D model settings (future)
+  model_3d:
+    model_path: "models/avatar_3d.obj"
+    texture_path: "models/avatar_texture.png"
+    render_engine: "pyrender"
+
+  # Video composition settings
+  video:
+    background_color: [255, 255, 255]  # White background
+    background_image: null
+    resolution: [1920, 1080]
+    fps: 30
+    codec: "mp4v"
+
+# Logging and Output
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  log_to_file: true
+  log_dir: "outputs/logs"
+
+  # Experiment tracking
+  use_wandb: false
+  wandb_project: "asl-recognition"
+  wandb_entity: null
+
+# Paths
+paths:
+  # Model checkpoints
+  checkpoint_dir: "outputs/checkpoints"
+  best_model_path: "outputs/checkpoints/best_model.h5"
+
+  # Outputs
+  metrics_dir: "outputs/metrics"
+  predictions_dir: "outputs/predictions"
+  videos_dir: "outputs/videos"
+
+  # TensorBoard logs
+  tensorboard_dir: "logs"
