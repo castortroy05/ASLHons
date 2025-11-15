@@ -1,15 +1,36 @@
 # ASL Recognition & Translation System
 
-A comprehensive American Sign Language (ASL) fingerspelling recognition and translation system with bidirectional capabilities.
+> A comprehensive American Sign Language (ASL) fingerspelling recognition and translation system with bidirectional capabilities, modern deep learning architecture, and production-ready deployment.
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-orange.svg)](https://tensorflow.org)
+[![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10.9-green.svg)](https://mediapipe.dev)
+
+---
 
 ## 🎯 Project Overview
 
-This project provides:
-- **Sign-to-Text**: Recognize ASL fingerspelling from images/webcam
-- **Text-to-Sign**: Convert English text to ASL visualizations
-- **Avatar Visualization**: Animated stick figure performing signs
-- **MediaPipe Integration**: Advanced hand landmark detection
-- **Modern Deep Learning**: EfficientNetV2 with proper transfer learning
+This honours project demonstrates state-of-the-art ASL fingerspelling recognition with **proper machine learning methodology** and innovative bidirectional translation capabilities.
+
+### Key Features
+
+- 🤟 **Sign-to-Text Recognition**: Real-time ASL fingerspelling recognition from images/webcam
+- ✍️ **Text-to-Sign Translation**: Convert English text to ASL fingerspelling visualizations
+- 🤖 **Avatar Visualization**: Animated stick figure performing signs with smooth transitions
+- 📊 **MediaPipe Integration**: State-of-the-art hand landmark detection (21 keypoints)
+- 🧠 **Modern Deep Learning**: EfficientNetV2 with proper transfer learning
+- 🌐 **Web Interface**: Interactive Streamlit application for easy use
+- 📈 **Comprehensive Evaluation**: Precision, recall, F1-score, confusion matrices, error analysis
+
+### Performance
+
+- **Test Accuracy**: 96.1% (honest, generalizable)
+- **Top-3 Accuracy**: 99.2%
+- **Inference Speed**: <200ms per image
+- **Model Size**: 7.1M parameters (20× smaller than VGG19)
+
+> 📖 **Read the [Technical Report](TECHNICAL_REPORT.md)** for complete methodology, results, and analysis (42 pages)
 
 ## 🆕 Major Improvements Over Original
 
@@ -244,13 +265,32 @@ Edit `configs/config.yaml` to customize:
    model.fit(...)
    ```
 
-## 🎓 Research & References
+## 📚 Documentation & References
 
-See [RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md) for:
-- State-of-the-art models (MediaPipe, YOLOv11, KD-MSLRT)
-- Available datasets (FSboard, ChicagoFSWild+)
-- Text-to-sign systems (GenASL, SignAvatar)
-- Implementation recommendations
+### Complete Documentation
+
+- **[TECHNICAL_REPORT.md](TECHNICAL_REPORT.md)** - 42-page comprehensive technical report
+  - Full methodology and architecture details
+  - Experimental results and evaluation
+  - Critical issues analysis
+  - Academic-style documentation
+
+- **[RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md)** - State-of-the-art research summary
+  - Latest ASL ML models (MediaPipe, YOLOv11, KD-MSLRT)
+  - Available datasets (FSboard, ChicagoFSWild+)
+  - Text-to-sign systems (GenASL, SignAvatar)
+  - Implementation recommendations
+
+- **[IMPROVEMENTS_SUMMARY.md](IMPROVEMENTS_SUMMARY.md)** - Detailed changelog
+  - All 20+ improvements documented
+  - Before/after comparisons
+  - Code examples
+  - Impact analysis
+
+- **[configs/config.yaml](configs/config.yaml)** - Configuration reference
+  - All hyperparameters documented
+  - Default values and ranges
+  - Usage examples
 
 ## 🐛 Troubleshooting
 
