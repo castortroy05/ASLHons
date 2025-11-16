@@ -1,0 +1,364 @@
+# Multi-Language Sign Language Configuration
+# Supports multiple sign languages with their specific characteristics
+
+languages:
+  ASL:
+    name: "American Sign Language"
+    full_name: "American Sign Language"
+    region: "United States, Canada"
+    iso_code: "ase"
+
+    # Vocabulary
+    vocabulary_size: 10000
+    common_signs: 2000
+    fingerspelling: true
+    fingerspelling_alphabet_size: 24  # Excluding J, Z
+
+    # Grammar
+    grammar_type: "topic_comment"
+    word_order: "flexible"  # More flexible than English
+    uses_classifiers: true
+    spatial_grammar: true
+
+    # Features
+    one_handed_signs: 0.3  # 30% of signs
+    two_handed_signs: 0.7  # 70% of signs
+    facial_expressions: "critical"  # Essential for grammar
+    body_movement: "important"
+    non_manual_markers: ["eyebrow_raise", "head_tilt", "shoulder_shift"]
+
+    # Datasets available
+    datasets:
+      - name: "WLASL"
+        size: 21000
+        vocabulary: 2000
+        url: "https://dxli94.github.io/WLASL/"
+      - name: "MS-ASL"
+        size: 25000
+        vocabulary: 1000
+        url: "https://www.microsoft.com/en-us/research/project/ms-asl/"
+      - name: "ChicagoFSWild+"
+        size: 55232
+        type: "fingerspelling"
+
+    # Model parameters
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.1
+
+  BSL:
+    name: "British Sign Language"
+    full_name: "British Sign Language"
+    region: "United Kingdom"
+    iso_code: "bfi"
+
+    vocabulary_size: 8000
+    common_signs: 1500
+    fingerspelling: true
+    fingerspelling_alphabet_size: 26  # Two-handed alphabet!
+
+    grammar_type: "topic_comment"
+    word_order: "flexible"
+    uses_classifiers: true
+    spatial_grammar: true
+
+    one_handed_signs: 0.2
+    two_handed_signs: 0.8
+    facial_expressions: "critical"
+    body_movement: "important"
+    non_manual_markers: ["eyebrow_raise", "mouth_patterns"]
+
+    # Key difference: Two-handed fingerspelling!
+    fingerspelling_type: "two_handed"
+
+    datasets:
+      - name: "BSL Corpus"
+        size: "1500 hours"
+        signers: 249
+        url: "https://bslcorpusproject.org/"
+      - name: "BSL SignBank"
+        vocabulary: 2500
+
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.1
+
+    # Similar to Auslan
+    related_languages: ["Auslan", "NZSL"]
+
+  ISL:
+    name: "Indian Sign Language"
+    full_name: "Indian Sign Language"
+    region: "India"
+    iso_code: "ins"
+
+    vocabulary_size: 7000
+    common_signs: 1200
+    fingerspelling: false  # Not commonly used
+
+    grammar_type: "topic_comment"
+    word_order: "sov"  # Subject-Object-Verb influenced by Hindi/regional languages
+    uses_classifiers: true
+    spatial_grammar: true
+
+    one_handed_signs: 0.4
+    two_handed_signs: 0.6
+    facial_expressions: "important"
+    body_movement: "important"
+
+    # Regional variations
+    regional_variants:
+      - "North Indian SL"
+      - "South Indian SL"
+      - "Kolkata SL"
+      - "Mumbai SL"
+
+    datasets:
+      - name: "ISL-CSLR"
+        vocabulary: 5000
+        note: "Limited availability"
+
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.15
+
+  Auslan:
+    name: "Auslan"
+    full_name: "Australian Sign Language"
+    region: "Australia"
+    iso_code: "asf"
+
+    vocabulary_size: 7500
+    common_signs: 1500
+    fingerspelling: true
+    fingerspelling_alphabet_size: 26
+    fingerspelling_type: "two_handed"  # Based on BSL
+
+    grammar_type: "topic_comment"
+    word_order: "flexible"
+    uses_classifiers: true
+    spatial_grammar: true
+
+    one_handed_signs: 0.25
+    two_handed_signs: 0.75
+    facial_expressions: "critical"
+    body_movement: "important"
+    non_manual_markers: ["eyebrow_raise", "mouth_patterns"]
+
+    # Very similar to BSL (historical connection)
+    based_on: "BSL"
+    similarity_to_bsl: 0.8
+
+    datasets:
+      - name: "Auslan Corpus"
+        signers: "300+"
+        url: "http://auslan.org.au/"
+
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.1
+
+  NZSL:
+    name: "NZSL"
+    full_name: "New Zealand Sign Language"
+    region: "New Zealand"
+    iso_code: "nzs"
+
+    vocabulary_size: 7000
+    common_signs: 1400
+    fingerspelling: true
+    fingerspelling_alphabet_size: 26
+    fingerspelling_type: "two_handed"
+
+    grammar_type: "topic_comment"
+    word_order: "flexible"
+    uses_classifiers: true
+    spatial_grammar: true
+
+    # Similar to BSL and Auslan
+    based_on: "BSL"
+    similarity_to_bsl: 0.75
+    similarity_to_auslan: 0.85
+
+    one_handed_signs: 0.25
+    two_handed_signs: 0.75
+    facial_expressions: "critical"
+    body_movement: "important"
+
+    # Includes Māori signs
+    includes_maori_signs: true
+
+    datasets:
+      - name: "NZSL Dictionary"
+        vocabulary: 6000
+
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.1
+
+  JSL:
+    name: "JSL"
+    full_name: "Japanese Sign Language"
+    region: "Japan"
+    iso_code: "jsl"
+
+    vocabulary_size: 6000
+    common_signs: 1000
+    fingerspelling: true
+    fingerspelling_alphabet_size: 45  # Includes hiragana
+
+    grammar_type: "sov"  # Subject-Object-Verb (like Japanese)
+    word_order: "sov"
+    uses_classifiers: true
+    spatial_grammar: true
+
+    one_handed_signs: 0.3
+    two_handed_signs: 0.7
+    facial_expressions: "moderate"
+    body_movement: "moderate"
+
+    # Unique features
+    unique_features:
+      - "mouth_movements"  # Mouthing Japanese words
+      - "hiragana_fingerspelling"
+      - "kanji_classifiers"
+
+    datasets:
+      - name: "JSLD"
+        vocabulary: 1200
+        note: "Limited availability"
+
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.15
+
+  CSL:
+    name: "CSL"
+    full_name: "Chinese Sign Language"
+    region: "China"
+    iso_code: "csl"
+
+    vocabulary_size: 8000
+    common_signs: 1500
+    fingerspelling: false  # Uses different system
+
+    grammar_type: "topic_comment"
+    word_order: "svo"  # More similar to Chinese
+    uses_classifiers: true
+    spatial_grammar: true
+
+    one_handed_signs: 0.35
+    two_handed_signs: 0.65
+    facial_expressions: "moderate"
+    body_movement: "moderate"
+
+    # Number system using fingers (unique to CSL)
+    unique_number_system: true
+
+    datasets:
+      - name: "CSL Dataset"
+        vocabulary: 500
+        note: "Very limited"
+
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.15
+
+  LSF:
+    name: "LSF"
+    full_name: "French Sign Language (Langue des Signes Française)"
+    region: "France, francophone countries"
+    iso_code: "fsl"
+
+    vocabulary_size: 7500
+    common_signs: 1500
+    fingerspelling: true
+    fingerspelling_alphabet_size: 26
+
+    grammar_type: "topic_comment"
+    word_order: "flexible"
+    uses_classifiers: true
+    spatial_grammar: true
+
+    one_handed_signs: 0.3
+    two_handed_signs: 0.7
+    facial_expressions: "critical"
+    body_movement: "important"
+
+    # Historical note: ASL is derived from LSF
+    historical_relationship: "ancestor_of_ASL"
+
+    datasets:
+      - name: "LSF Dictionary"
+        vocabulary: 3500
+
+    model:
+      embedding_dim: 512
+      num_layers: 6
+      num_heads: 8
+      dropout: 0.1
+
+# Default language
+default_language: "ASL"
+
+# Language families (similar languages)
+language_families:
+  BANZSL:  # British, Australian, New Zealand SL family
+    - "BSL"
+    - "Auslan"
+    - "NZSL"
+
+  French_family:
+    - "LSF"
+    - "ASL"  # Historically derived from LSF
+
+  Asian:
+    - "JSL"
+    - "CSL"
+    - "ISL"
+
+# Feature importance for recognition
+feature_weights:
+  hand_shape: 0.35
+  hand_movement: 0.25
+  hand_location: 0.20
+  palm_orientation: 0.10
+  facial_expression: 0.07
+  body_movement: 0.03
+
+# Real-time processing
+realtime:
+  frame_rate: 30
+  buffer_size_seconds: 3
+  sliding_window_frames: 90
+  min_confidence: 0.7
+  temporal_smoothing: true
+
+# Translation settings
+translation:
+  enable_grammar_transformation: true
+  preserve_emphasis: true
+  add_nonmanual_markers: true
+  use_regional_variants: false
+
+# Avatar generation
+avatar:
+  default_type: "3d"  # Options: 2d_stick, 3d, video_composite
+  animation_fps: 60
+  transition_smoothing: true
+  include_facial_expressions: true
+  include_body_movement: true

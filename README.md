@@ -11,7 +11,19 @@
 
 ## 🎯 Project Overview
 
-This honours project demonstrates state-of-the-art ASL fingerspelling recognition with **proper machine learning methodology** and innovative bidirectional translation capabilities.
+This honours project has evolved from fingerspelling-only to a **comprehensive multi-language, real-time sign language translation platform** with proper machine learning methodology and innovative bidirectional communication capabilities.
+
+### 🚀 Version 2.0 Expansion (In Development)
+
+We're expanding beyond fingerspelling to include:
+- ✨ **Full Sign Language Recognition** using temporal models (LSTM/Transformer)
+- 🌍 **Multi-Language Support** (ASL, BSL, ISL, Auslan, JSL, CSL, LSF, NZSL)
+- 🔄 **Real-Time Bidirectional Communication** (Deaf ↔ Hearing, Deaf ↔ Deaf)
+- 🎤 **Speech Integration** (Whisper ASR + TTS for spoken language)
+- 📺 **Live Captioning** for sign language videos
+- 🌐 **Cross-Language Translation** between different sign languages
+
+See [EXPANSION_DESIGN.md](EXPANSION_DESIGN.md) for complete architecture details.
 
 ### Key Features
 
